@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - run: zip -r upload.zip ./
+      - run: EmployerDaoImpl.java
       
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
@@ -22,4 +22,4 @@ jobs:
       - name: Unzip the Pipeline Scanner
         run: unzip pipeline-scan-LATEST.zip
       - name: Run Pipeline Scanner
-        run: java -Dpipeline.debug=true -jar pipeline-scan.jar --veracode_api_id "${{secrets.VERACODE_API_ID}}" --veracode_api_key "${{secrets.VERACODE_API_KEY}}" --file "upload.zip" --fail_on_severity="Very High, High"
+        run: java -Dpipeline.debug=true -jar pipeline-scan.jar --veracode_api_id "${{secrets.VERACODE_API_ID}}" --veracode_api_key "${{secrets.VERACODE_API_KEY}}" --file "EmployerDaoImpl.java" --fail_on_severity="Very High, High"
