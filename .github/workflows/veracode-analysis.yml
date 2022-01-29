@@ -1,10 +1,10 @@
 name: Veracode Static Analysis Pipeline Scan
  
- on: 
+on: 
   push:
    branches: [ main ]
  
- jobs:
+jobs:
   build-pipelinescan:
     runs-on: ubuntu-latest
     steps:
@@ -14,20 +14,14 @@ name: Veracode Static Analysis Pipeline Scan
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-    
-    - name: Zip All Java Files
-      uses: montudor/action-zip@v0.1.0
-      with:
-        args: zip -qq -r upload.zip src
-    
-    - name: Download Pipeline Scan Client
-      uses: wei/curl@master
-      with:
-        args: -O https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
         
-    - name: Unzip the Pipeline Scan Client
-      run:  unzip pipeline-scan-LATEST.zip pipeline-scan.jar
-      
-    - name: Run Pipeline Scan
-      run: java -jar pipeline-scan.jar -f upload.zip --veracode_api_id "${{secrets.VERACODE_API_ID}}" --veracode_api_key "${{secrets.VERACODE_API_KEY}}" --fail_on_severity="Very High, High" --file upload.zip --issue_details true
-      continue-on-error: true
+    - run: zip -r upload.zip ./
+    
+    - run: curl --silent --show-error --fail -O https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
+    - run: unzip -o pipeline-scan-LATEST.zip
+    
+    - uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+       
+    - run: java -jar pipeline-scan.jar -f upload.zip -vid "${{secrets.VERACODE_API_ID}}" -vkey "${{secrets.VERACODE_API_KEY}}" --fail_on_severity="Very High, High" --file upload.zip
