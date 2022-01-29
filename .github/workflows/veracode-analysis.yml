@@ -14,11 +14,8 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-    
-    - name: Zip All Java Files
-      uses: montudor/action-zip@v0.1.0
-      with:
-        args: zip -qq -r upload.zip src . -i src
+        
+    - run: zip -r upload.zip ./
     
     - run: curl --silent --show-error --fail -O https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
     - run: unzip -o pipeline-scan-LATEST.zip
