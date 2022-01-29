@@ -18,7 +18,7 @@ jobs:
     - name: Zip All Java Files
       uses: montudor/action-zip@v0.1.0
       with:
-        args: zip -qq -r upload.zip src
+        args: zip -qq -r upload.zip src . -i src
     
     - name: Download Pipeline Scan Client
       uses: wei/curl@master
