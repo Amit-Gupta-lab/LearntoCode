@@ -29,4 +29,4 @@ jobs:
       run:  unzip pipeline-scan-LATEST.zip pipeline-scan.jar
       
     - name: Run Pipeline Scan
-      run: java -jar pipeline-scan.jar --veracode_api_id "${{secrets.VERACODE_API_ID}}" --veracode_api_key "${{secrets.VERACODE_API_KEY}}" --fail_on_severity="Very High, High" --file upload.zip --issue_details true
+      run: java -jar pipeline-scan.jar --veracode_api_id "${{secrets.VERACODE_API_ID}}" --veracode_api_key "${{secrets.VERACODE_API_KEY}}" --fail_on_severity="Very High, High" --file upload.zip
